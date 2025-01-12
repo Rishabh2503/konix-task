@@ -6,6 +6,8 @@ import Navbar from './components/Navbar'; // Assuming you have a Navbar componen
 import Sidebar from './components/Sidebar'; // Assuming you have a Sidebar component
 import Breadcrumb from './components/Breadcrumb';
 import TrendingCoinsCarousel from './components/TrendingCarousel';
+import About from './components/About';
+import PerformanceSection from './components/PerformanceSection';
 
 const Page = () => {
   return (
@@ -21,6 +23,7 @@ const Page = () => {
           </div>
           <CryptoDashboard />
           {/* <TrendingCoinsCarousel /> */}
+          
         </div>
 
         {/* Sidebar */}

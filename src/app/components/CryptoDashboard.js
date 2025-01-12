@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 import { getBitcoinData } from '../utils/api';
 import BitcoinChart from './BitcoinChart';
+import PerformanceSection from './PerformanceSection';
+import About from './About';
+import ToggleSection from './ToggleSection';
 const sections = [
   'Overview',
   'Fundamentals',
@@ -136,26 +139,9 @@ const CryptoDashboard = () => {
           <BitcoinChart />
         </div>
       </div>
-      <div className="flex overflow-x-scroll bg-gray-100 border-b border-gray-300">
-        {sections.map((section, index) =>
-          <button
-            key={index}
-            onClick={() => setActiveSection(section)}
-            className={`px-4 py-2 whitespace-nowrap ${activeSection === section
-              ? 'border-b-2 border-blue-500 text-blue-500'
-              : 'text-gray-600 hover:text-blue-500'}`}
-          >
-            {section}
-          </button>
-        )}
-      </div>
-
-      {/* Dynamic Section Rendering */}
-      <div className="p-4">
-        {activeSection === 'Overview' && <PerformanceComponent />}
-        {activeSection === 'Fundamentals' && <div>Fundamentals Content</div>}
-        {/* Add other sections similarly */}
-      </div>
+      <ToggleSection />
+      <PerformanceSection />
+      <About />
     </div>
   );
 };
