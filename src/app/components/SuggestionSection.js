@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 function SuggestionSection() {
   const [cryptoData, setCryptoData] = useState([]);
-  const [scrollIndex, setScrollIndex] = useState(0); // State to track scroll position
 
   useEffect(() => {
     axios
@@ -16,9 +16,10 @@ function SuggestionSection() {
       });
   }, []);
 
-  const scrollCarousel = direction => {
-    const carousel = document.getElementById('crypto-carousel');
-    const scrollAmount = 300; // You can adjust this value for scrolling speed
+  const scrollCarousel = (direction, carouselId) => {
+    const carousel = document.getElementById(carouselId);
+    const scrollAmount = carousel.clientWidth * 0.8; // Scroll 80% of the viewport width
+
     if (direction === 'left') {
       carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     } else if (direction === 'right') {
@@ -26,64 +27,82 @@ function SuggestionSection() {
     }
   };
 
+  // Custom CSS for hiding scrollbar while maintaining scroll functionality
+  const scrollStyles = `
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  `;
+
   return (
     <div className="bg-white md:mt-2 p-8 w-full relative">
+      <style>
+        {scrollStyles}
+      </style>
       <div>
         <div className="text-[#202020] text-2xl font-semibold">
           You May Also Like
         </div>
 
-        <div
-          className="mt-4 flex overflow-x-auto scroll-hidden no-scrollbar relative"
-          id="crypto-carousel"
-        >
+        <div className="relative mt-4">
           <div
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 cursor-pointer"
-            onClick={() => scrollCarousel('left')}
+            className="flex overflow-x-auto no-scrollbar scroll-smooth relative gap-4 px-4"
+            id="crypto-carousel-1"
           >
-            <span className="text-xl text-gray-700">&lt;</span>
+            {cryptoData
+              .slice(0, 5)
+              .map((crypto, index) =>
+                <CryptoCard key={index} cryptoData={crypto.item} />
+              )}
           </div>
 
-          {cryptoData
-            .slice(0, 5)
-            .map((crypto, index) =>
-              <CryptoCard key={index} cryptoData={crypto.item} />
-            )}
-
-          <div
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 cursor-pointer"
-            onClick={() => scrollCarousel('right')}
+          <button
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg hover:shadow-xl rounded-full p-2.5 transition-all duration-200 z-10 backdrop-blur-sm border border-gray-100"
+            onClick={() => scrollCarousel('left', 'crypto-carousel-1')}
           >
-            <span className="text-xl text-gray-700">&gt;</span>
-          </div>
+            <ChevronLeft className="w-5 h-5 text-gray-700" />
+          </button>
+
+          <button
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg hover:shadow-xl rounded-full p-2.5 transition-all duration-200 z-10 backdrop-blur-sm border border-gray-100"
+            onClick={() => scrollCarousel('right', 'crypto-carousel-1')}
+          >
+            <ChevronRight className="w-5 h-5 text-gray-700" />
+          </button>
         </div>
 
         <div className="text-[#202020] text-2xl font-semibold mt-6">
           Trending Coins
         </div>
-        <div
-          className="mt-4 flex overflow-x-auto no-scrollbar relative"
-          id="crypto-carousel"
-        >
+        <div className="relative mt-4">
           <div
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 cursor-pointer"
-            onClick={() => scrollCarousel('left')}
+            className="flex overflow-x-auto no-scrollbar scroll-smooth relative gap-4 px-4"
+            id="crypto-carousel-2"
           >
-            <span className="text-xl text-gray-700">&lt;</span>
+            {cryptoData
+              .slice(1, 6)
+              .map((crypto, index) =>
+                <CryptoCard key={index} cryptoData={crypto.item} />
+              )}
           </div>
 
-          {cryptoData
-            .slice(1, 6)
-            .map((crypto, index) =>
-              <CryptoCard key={index} cryptoData={crypto.item} />
-            )}
-
-          <div
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 cursor-pointer"
-            onClick={() => scrollCarousel('right')}
+          <button
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg hover:shadow-xl rounded-full p-2.5 transition-all duration-200 z-10 backdrop-blur-sm border border-gray-100"
+            onClick={() => scrollCarousel('left', 'crypto-carousel-2')}
           >
-            <span className="text-xl text-gray-700">&gt;</span>
-          </div>
+            <ChevronLeft className="w-5 h-5 text-gray-700" />
+          </button>
+
+          <button
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white shadow-lg hover:shadow-xl rounded-full p-2.5 transition-all duration-200 z-10 backdrop-blur-sm border border-gray-100"
+            onClick={() => scrollCarousel('right', 'crypto-carousel-2')}
+          >
+            <ChevronRight className="w-5 h-5 text-gray-700" />
+          </button>
         </div>
       </div>
     </div>
@@ -92,7 +111,7 @@ function SuggestionSection() {
 
 function CryptoCard({ cryptoData }) {
   return (
-    <div className="lg:w-[300px] w-full rounded-2xl p-5 border-2 my-2 mr-2 flex-shrink-0">
+    <div className="lg:w-[300px] w-full rounded-2xl p-5 border-2 my-2 flex-shrink-0 hover:border-gray-300 transition-colors duration-200">
       <div className="flex items-center space-x-2">
         <img
           src={cryptoData.large}
