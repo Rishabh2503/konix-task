@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cryptocurrency Dashboard
 
-## Getting Started
+A responsive cryptocurrency dashboard that displays real-time crypto prices, trends, and charts using CoinGecko API and TradingView widgets.
 
-First, run the development server:
+## 🚀 Live Demo
 
+[View Live Project](https://konix-task.vercel.app/)
+
+## ✨ Features
+
+### Implemented Components
+- Real-time Bitcoin price tracking in USD and INR
+- 24-hour price change indicators
+- TradingView advanced chart integration
+- Top 3 trending cryptocurrencies display
+- Horizontally scrollable "You May Also Like" carousel
+- Responsive design matching Figma specifications
+
+### API Integrations
+1. **CoinGecko Price API** (`/simple/price`)
+   - Fetches Bitcoin prices in USD and INR
+   - Includes 24-hour price changes
+   ```json
+   {
+     "bitcoin": {
+       "inr": 5697177,
+       "inr_24h_change": 3.6596920153414336,
+       "usd": 68726,
+       "usd_24h_change": 3.6767559459431545
+     }
+   }
+   ```
+
+2. **CoinGecko Trending API** (`/search/trending`)
+   - Displays top 3 trending coins
+   - Utilizes coin logos, symbols, and sparkline graphs
+
+3. **TradingView Chart Widget**
+   - Embedded advanced chart functionality
+   - Customized to match Figma design specifications
+
+## 🛠️ Technologies Used
+
+- Next.js
+- React
+- TradingView Widgets
+- CoinGecko API
+
+## 🚀 Getting Started
+
+1. Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Rishabh2503/konix-task
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Start the development server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+## 📱 Responsive Design
 
-To learn more about Next.js, take a look at the following resources:
+The application is fully responsive and adapts to:
+- Desktop views
+- Tablet views
+- Mobile views
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔄 API Integration Details
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### CoinGecko APIs Used:
+1. Price Data: `/simple/price`
+   - Parameters:
+     - `ids`: bitcoin
+     - `vs_currencies`: inr,usd
+     - `include_24hr_change`: true
 
-## Deploy on Vercel
+2. Trending Coins: `/search/trending`
+   - Used for trending coins section
+   - Implements carousel functionality
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### TradingView Integration:
+- Advanced Chart Widget implementation using Chart.js
+- Customized parameters to match design specifications
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 🔧 Best Practices Implemented
+
+1. Clean Code Architecture
+2. Proper Component Structure
+3. Efficient State Management
+4. Version Control Best Practices
+
+## 📚 Future Improvements
+
+- Dynamic token display via URL routing
+- Integration with `/coins/{id}` API for additional coin data
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👨‍💻 Author
+
+Your Name
+- GitHub: [@Rishabh2503](https://github.com/Rishabh2503)
