@@ -5,6 +5,10 @@ import BitcoinChart from './BitcoinChart';
 import PerformanceSection from './PerformanceSection';
 import About from './About';
 import ToggleSection from './ToggleSection';
+import SentimentSection from './SentimentSection';
+import Tokenomics from './Tokenomics';
+import TeamCard from './TeamCard';
+import SuggestionSection from './SuggestionSection';
 const sections = [
   'Overview',
   'Fundamentals',
@@ -142,6 +146,10 @@ const CryptoDashboard = () => {
       <ToggleSection />
       <PerformanceSection />
       <About />
+      <SentimentSection />
+      <Tokenomics />
+      <TeamCard />
+      <SuggestionSection />
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 function ToggleSection({ onSectionChange }) {
-  const [activeSection, setActiveSection] = useState("Overview");
+  const [activeSection, setActiveSection] = useState('Overview');
 
-  const handleSectionClick = (section) => {
+  const handleSectionClick = section => {
     setActiveSection(section);
     if (onSectionChange) {
       onSectionChange(section); // Call the parent function if provided
@@ -12,20 +12,31 @@ function ToggleSection({ onSectionChange }) {
 
   return (
     <div>
-      <div className="flex space-x-7 lg:space-x-10 text-sm font-medium text-[#3E424A] py-4 overflow-x-auto">
-        {["Overview", "Fundamentals", "News Insights", "Sentiments", "Team", "Technicals", "Tokenomics"].map((section) => (
+      <div className="flex space-x-4 md:space-x-6 lg:space-x-10 text-xs md:text-sm font-medium text-[#3E424A] py-1 md:py-4 overflow-x-hidden">
+        {[
+          'Overview',
+          'Fundamentals',
+          'News Insights',
+          'Sentiments',
+          'Team',
+          'Technicals',
+          'Tokenomics'
+        ].map(section =>
           <div
             key={section}
-            className={`cursor-pointer ${activeSection === section ? "text-[#0141CF] border-[#0052FE] border-b-4 pb-4" : ""}`}
+            className={`flex-1 cursor-pointer text-center ${activeSection ===
+            section
+              ? 'text-[#0141CF] border-[#0052FE]  border-b-4 pb-1'
+              : ''} whitespace-nowrap`}
             onClick={() => handleSectionClick(section)}
           >
             {section}
           </div>
-        ))}
+        )}
       </div>
       <hr className="" />
     </div>
   );
 }
 
-export default ToggleSection; 
+export default ToggleSection;

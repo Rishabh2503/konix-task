@@ -1,39 +1,93 @@
-"use client"
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function TrendingCoins() {
-  const [trendingCoins, setTrendingCoins] = useState([]);
+function TrendingCoins() {
+  const [coinsData, setCoinsData] = useState([]); // Removed TypeScript type
 
   useEffect(() => {
-    const fetchTrendingCoins = async () => {
+    const fetchCoinData = async () => {
       try {
-        const response = await fetch('https://api.coingecko.com/api/v3/search/trending');
-        const data = await response.json();
-        setTrendingCoins(data.coins.slice(0, 3));
+        const response = await axios.get(
+          'https://api.coingecko.com/api/v3/search/trending'
+        );
+        const trendingCoins = response.data.coins.slice(0, 3);
+
+        const formattedCoinsData = trendingCoins.map(coin => ({
+          symbol: coin.item.symbol.toUpperCase(),
+          name: coin.item.name,
+          img: coin.item.large,
+          changePercentage: coin.item.data.price_change_percentage_24h.usd.toFixed(
+            2
+          )
+        }));
+
+        // Updating the state with the formatted data
+        setCoinsData(formattedCoinsData);
       } catch (error) {
-        console.error('Error fetching trending coins:', error);
+        console.error('Error fetching coin data:', error);
       }
     };
 
-    fetchTrendingCoins();
+    fetchCoinData();
   }, []);
 
   return (
-    <div className="bg-white rounded-lg p-6 mt-6 shadow-sm">
-      <h2 className="text-xl font-bold mb-4">Trending Coins (24h)</h2>
-      <div className="space-y-4">
-        {trendingCoins.map((coin) => (
-          <div key={coin.item.id} className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <img src={coin.item.thumb} alt={coin.item.name} className="w-6 h-6" />
-              <span>{coin.item.symbol.toUpperCase()}</span>
-            </div>
-            <div className={`px-2 py-1 rounded ${coin.item.data.price_change_percentage_24h.usd > 0 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-              {coin.item.data.price_change_percentage_24h.usd.toFixed(2)}%
-            </div>
-          </div>
-        ))}
+    <div className="lg:h-[225px] bg-white lg:ml-4 mt-4 rounded-lg px-8 pt-5">
+      <div className="text-2xl font-semibold text-[#0F1629]">
+        Trending Coins (24h)
+      </div>
+      <div className="mt-4">
+        {coinsData.map((coin, index) =>
+          <Coin
+            key={index}
+            symbol={coin.symbol}
+            name={coin.name}
+            img={coin.img}
+            changePercentage={coin.changePercentage}
+          />
+        )}
       </div>
     </div>
   );
 }
+
+function Coin({ symbol, name, img, changePercentage }) {
+  const isPositiveChange = parseFloat(changePercentage) >= 0; // Parse changePercentage to float
+
+  return (
+    <div className="flex my-2 justify-between text-center py-1">
+      <div className="flex pt-1">
+        <div>
+          <img src={img} className="w-6 rounded-full" alt="Coin icon" />
+        </div>
+        <div className="text-[#0F1629] ml-1">
+          {name} ({symbol})
+        </div>
+      </div>
+      <div
+        className={`flex items-center justify-center rounded-lg p-2 h-8 ml-10 ${isPositiveChange
+          ? 'bg-green-300/20'
+          : 'bg-red-300/20'}`}
+      >
+        <svg
+          viewBox="0 0 100 100"
+          className={`w-4 fill-current ${isPositiveChange
+            ? 'text-green-600'
+            : 'text-red-600'}`}
+          style={{ transform: isPositiveChange ? '' : 'rotate(180deg)' }}
+        >
+          <polygon points="0,100 50,0 100,100" />
+        </svg>
+        <span
+          className={`ml-2 text-sm font-bold ${isPositiveChange
+            ? 'text-green-600'
+            : 'text-red-600'}`}
+        >
+          {changePercentage}%
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export default TrendingCoins;
