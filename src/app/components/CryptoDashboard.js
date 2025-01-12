@@ -143,13 +143,15 @@ const CryptoDashboard = () => {
           <BitcoinChart />
         </div>
       </div>
-      <ToggleSection />
-      <PerformanceSection />
-      <About />
-      <SentimentSection />
-      <Tokenomics />
-      <TeamCard />
-      <SuggestionSection />
+      <div className="mt-4">
+        <ToggleSection />
+        <PerformanceSection />
+        <SentimentSection />
+        <About />
+        <Tokenomics />
+        <TeamCard />
+      </div>
+      
     </div>
   );
 };

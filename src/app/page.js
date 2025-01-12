@@ -1,13 +1,11 @@
-// pages/index.js
 'use client';
 import React from 'react';
 import CryptoDashboard from './components/CryptoDashboard';
 import Navbar from './components/Navbar'; // Assuming you have a Navbar component
 import Sidebar from './components/Sidebar'; // Assuming you have a Sidebar component
 import Breadcrumb from './components/Breadcrumb';
-import TrendingCoinsCarousel from './components/TrendingCarousel';
-import About from './components/About';
-import PerformanceSection from './components/PerformanceSection';
+
+import SuggestionSection from './components/SuggestionSection';
 
 const Page = () => {
   return (
@@ -23,14 +21,19 @@ const Page = () => {
           </div>
           <CryptoDashboard />
           {/* <TrendingCoinsCarousel /> */}
-          
         </div>
 
-        {/* Sidebar */}
-        <div className="w-full md:w-1/4 p-4 bg-gray-100 overflow-hidden">
+        {/* Sidebar (mobile: below SuggestionSection, md+: on the right) */}
+        <div className="hidden md:block w-full md:w-1/4 p-4 bg-gray-100 overflow-hidden md:mt-0 mt-4">
           <Sidebar />
         </div>
       </div>
+
+      {/* Suggestion Section */}
+      <SuggestionSection />
+      <div className="md:hidden w-full md:w-1/4 p-4 bg-gray-100 overflow-hidden order-2 md:order-1 md:mt-0 mt-4">
+          <Sidebar />
+        </div>
     </div>
   );
 };
